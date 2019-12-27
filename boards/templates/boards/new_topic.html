@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
+  
+
+{% block breadcrumb %}
+<ol class="breadcrumb my-4">
+  <li class="breadcrumb-item"><a href="{% url 'index' %}">Boards</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'board_topics' board.pk %}">{{ board.name }}</a></li>
+  <li class="breadcrumb-item active">New Topic</li>
+</ol>
+{% endblock breadcrumb %}
+
+
+{% block content %}
+<form method="POST" novalidate>
+  
+  {% csrf_token %}
+  {% include 'includes/form.html' %}
+
+  <button type="submit" class="btn btn-success">Post</button>
+</form>
+{% endblock content %}

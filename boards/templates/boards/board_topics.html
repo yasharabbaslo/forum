@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb my-4">
+  <li class="breadcrumb-item"><a href="{% url 'index' %}">Boards</a></li>
+  <li class="breadcrumb-item active">{{ board.name }}</li>
+</ol>
+{% endblock breadcrumb %}
+
+
+{% block content %}
+<div class="mb-4">
+  <a href="{% url 'new_topic' board.pk %}" class="btn btn-primary">New Topic</a>
+</div>
+<table class="table">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Topics</th>
+      <th>Starter</th>
+      <th>Replies</th>
+      <th>Views</th>
+      <th>Last Update</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for topic in topics %}
+    <tr>
+      <td><a href="{% url 'topic_posts' board.pk topic.pk %}">{{ topic.subject }}</a></td>
+      <td>{{ topic.starter.username }}</td>
+      <td>{{ topic.replies }}</td>
+      <td>{{ topic.views }}</td>
+      <td>{{ topic.last_updated|naturaltime }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% include 'includes/pagination.html' %}
+
+{% endblock content %}
